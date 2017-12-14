@@ -1,0 +1,508 @@
+/* ////////////////////////////// GLOBAL ASPECTS /////////////////////////////// */
+*{
+    box-sizing: border-box;
+}
+body{
+    font-size: 13px;
+    font-family: 'Nunito', sans-serif;
+    margin: 0;
+}
+.wrapper{
+    width: 1170px;
+    margin: 0 auto;
+}
+/* ///////////////////////////////// NAV BAR ////////////////////////////////// */
+.nav{
+    height: 68px;
+    background-color: #1b2126;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+.nav .wrapper{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.nav__menu{
+    list-style: none;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    color: #b2b5b8;
+    margin: 0;
+}
+
+.nav__menu li{
+    margin-left: 20px;
+    cursor: pointer;
+}
+/* ////////////////////////////// MAIN CONTAINER ////////////////////////////// */
+.mainContainer{
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+/* ____________________________: Dasboard Aspects :____________________________ */
+.dashboard{
+    width: 23%;
+    border-right: 1px solid #e9ecee;
+}
+
+.dashboard__navbar{
+    height: 50px;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+.dashboard__title{
+    color:#1b2126;
+    font-weight: 700;
+    width: 100%;
+    margin: 10px 0;
+}
+
+/* -----------------------------> Trackbar                                       */
+
+.trackbar{
+    height: 70px;
+    display: flex;
+    flex-flow: row wrap;
+    margin-bottom: 20px;
+}
+
+.trackbar__top,trackbar__bottom{
+    width: 100%;
+    height: 35px;
+    /* TODO: ajustar posiciones de titulo y data-filter */
+}
+
+.trackbar__data-filter{
+    font-size: 0.8em;
+    font-weight: 900;
+    color: #e9ecee;
+    border: 0.2em solid #e9ecee;
+    border-radius: 10px;
+    padding: 3px 5px;
+    display: inline-block;
+}
+
+.trackbar__regulartor-left,.trackbar__regulartor-right{
+    width: 36px;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+    border-radius: 22px;
+    background-color: #2883d8;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.trackbar__regulartor-right{
+    background-color: #3cb878;
+}
+
+.dashboard__genders{
+    display: flex;
+    flex-flow: row wrap;
+}
+
+/* __________________________: filmShowcase Aspects :__________________________ */
+.filmShowcase{
+    width: 77%;
+}
+
+.filmShowcase__navbar{
+    height: 50px;
+    color: #5c6269;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 30px;
+}
+
+.filmShowcase__showcase{
+    display: flex;
+    flex-flow: row wrap;
+}
+
+/* -----------------------------> Movie card                                     */
+.movieCard{
+    width: 270px;
+    height: 405px;
+    margin: 0 0 30px 30px;
+    background-image: url('../src/img/test-movie-card.png');
+    background-size: 270px 405px;
+    cursor: pointer;
+    transition:all 0.3s ease;
+}
+
+.movieCard:hover{
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+}
+
+.movieCard__details{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-end;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition:all 0.3s ease;
+}
+
+.movieCard__details:hover{
+    opacity: 1;
+}
+
+.movieCard__Title{
+    color: white;
+    padding: 15px;
+}
+
+.movieCard__Title h2{
+    font-size: 1.3em;
+    font-weight: 700;
+    margin: 0;
+}
+.movieCard__Title h3{
+    font-weight: 300;
+    font-size: 0.8em;
+    margin: 5px 0;    
+}
+
+.movieCard__stadistics{
+    height: 40px;
+    background-color: #1b2126c2;
+    color: white;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.load-box{
+    margin-bottom: 65px;
+    height: 100px;
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* ////////////////////////////// MOVIE DETAILS /////////////////////////////// */
+.movieDetails{
+    width: 80%;
+    background-color: white;
+    right: 0;
+    z-index: 100;
+    padding: 0 30px;
+    position: fixed;
+    overflow-y: scroll;
+    overflow-x:hidden;
+    top: 0;
+    bottom:0;
+}
+
+.movieDetails__header{
+    height: 105px;
+    border-bottom: 1px solid #e9ecee;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.movieDetails__header h2{
+    font-size: 2.16em;
+    color: #1b2126;
+    margin: 0;
+    margin-right: 10px;
+}
+
+.movieDetails__header h3{
+    font-size: 1.25em;
+    color: #a5a8ac;
+    margin: 0;    
+}
+
+.movieDetails__header__title{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-end;
+    align-self: flex-end;
+    margin-bottom: 30px;
+}
+
+.movieDetails__header img{
+    cursor: pointer;
+}
+
+/* -----------------------------> Data movie                                     */
+.dataMovie{
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.dataMovie img{
+    width: 440px;
+    height: 660px;
+}
+
+.dataMovie__details{
+    margin-left: 30px;
+}
+
+.dataMovie__sectionName{
+    font-size: 1.5em;
+    color: #1b2126;
+}
+
+.dataMovie__timeMovie{
+    font-size: 1.33em;
+    color: #8e9297;
+}
+
+.dataMovie__tag{
+    height: 28px;
+    line-height: 28px;
+    padding: 0 10px;
+    color: #5c6269;
+    background-color: #e9ecee;
+    border-radius: 6px;
+    display: inline-block;
+    margin: 0 2px;
+}
+
+.dataMovie__details__block{
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.dataMovie__stadistics{
+    color: #c0c4c8;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+.dataMovie__stadistics div{
+    margin-left: 25px;
+}
+
+.dataMovie__paragraph{
+    color: #8e9297;
+    margin-right: 40px;
+}
+
+.substitles{
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #e9ecee;
+    font-size: 1.2em;
+    color: #8e9297;
+    font-weight: 600;
+}
+
+.substitles__item{
+    font-weight: 400;
+    text-decoration: underline;
+}
+
+.movieDetails__similar-movies{
+    width: 100%;
+    overflow-x: scroll;
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.movieDetails__similar-movies img{
+    height: 240px;
+    cursor: pointer;
+    margin: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+/* _________________________: backgroundAlfa Aspects :_________________________ */
+.backgroundAlfa{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: #1b2126e8;
+    z-index: 50;
+}
+
+/* /////////////////////////////// MISCELANEUS //////////////////////////////// */
+
+/* ______________________________: Icons Aspects :_____________________________ */
+.stadisticsIcons{
+    height: 25px;
+    line-height: 25px;
+    background-image: url('../src/img/stadistics-icons.png');
+    background-position-y: 0;
+    background-repeat: no-repeat;
+    padding-left: 30px;
+}
+
+.stadisticsIcons--rotenTomatoes{
+    background-image: url('../src/img/stadistics-icons.png');
+    background-position-y: -25px;
+}
+
+.stadisticsIcons--fav{
+    background-image: url('../src/img/stadistics-icons.png');
+    background-position-y: -50px;
+}
+
+/* ______________________________: Text Aspects :______________________________ */
+.bold{
+    font-weight: 800;
+}
+
+.bold-remark{
+    color: #1b2126;
+    font-weight: 700;
+}
+/* _____________________________: Button Aspects :_____________________________ */
+.btn{
+    border: 0;
+    background-color: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    margin: 8px;
+}
+
+.btn:focus{
+    outline: none
+}
+
+.btn--filter{
+    color: #5c6269;
+}
+
+.btn--filter-delete{
+    color: #f3644f;
+}
+
+.btn--filter:hover{
+    font-weight: 700;
+}
+
+.btn--filter-delete:hover{
+    font-weight: 700;
+}
+
+.btn-gender{
+    width: 115px;
+    height: 33px;
+    line-height: 33px;
+    text-align: center;
+    color: #8e9297;
+    border: 2px solid #e9ecee;
+    border-radius: 6px;
+    margin: 9px 8px 0 0;
+}
+
+.btn-gender:hover{
+    color: #75787c;
+    border: 2px solid #c2c5c7;
+}
+.btn-gender-selected{
+    width: 115px;
+    height: 33px;
+    line-height: 33px;
+    text-align: center;
+    color: #2883d8;
+    border: 2px solid #2883d8;
+    border-radius: 6px;
+    margin: 9px 8px 0 0;
+}
+.btn-gender-selected:hover{
+    color: #2883d8;
+    border: 2px solid #2883d8;
+}
+
+/* _____________________________: Inputs Aspects :_____________________________ */
+.inputText{
+    width: 370px;
+    height: 38px;
+    line-height: 38px;
+    padding-left: 20px;
+    color: rgb(29, 29, 29);
+    background: white;
+    border: 0;
+    border-radius: 5px;
+}
+
+.inputText:focus{
+    outline: none;
+}
+
+.inputText--search{
+    color: #1b2126;
+    background-color: #5c6269;
+    background-image: url('../src/img/loupe.png');
+    background-repeat: no-repeat;
+    background-position: 10px 10px; 
+    padding-left: 35px;
+}
+
+.inputText--search::placeholder{
+    color: rgb(29, 29, 29);
+}
+
+/* _____________________________: Select Aspects :_____________________________ */
+.select{
+    border: 0;
+    background-color: rgba(0, 0, 0, 0);
+    color: #5c6269;
+}
+.select:focus{
+    outline: none
+}
+
+/* ____________________________: Spinner Aspects :_____________________________ */
+.load-spinner {
+    border: 5px solid #333;
+    border-radius: 30px;
+    height: 30px;
+    margin: -15px 0 0 -15px;
+    opacity: 0;
+    width: 30px;
+ 
+    animation: pulsate 1s ease-out;
+    animation-iteration-count: infinite;
+}
+
+@keyframes pulsate {
+    0% {
+      transform: scale(.1);
+      opacity: 0.0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1.2);
+      opacity: 0;
+    }
+}
+
+/* ______________________________: Aux Classes :_______________________________ */
+.no-scrollable{
+    overflow: hidden;
+}
