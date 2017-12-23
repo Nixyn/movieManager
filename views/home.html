@@ -1,78 +1,106 @@
-<div class="backgroundAlfa" ng-show="homeCtrl.movieSelected">
-    <section class="movieDetails">
-
-        <div class="movieDetails__header">
-            <div class="movieDetails__header__title">
-                <h2>{{homeCtrl.movieSelected.title}}</h2>
-                <h3>{{homeCtrl.movieSelected.year}}</h3>
-            </div>
-            <img src="../src/img/close-movie-details.png" alt="close button" ng-click="homeCtrl.closeMovieDetails()">
-        </div>
-
-        <article class="dataMovie">
-            <img src="{{homeCtrl.movieSelected.poster}}" alt="">
-            <div class="dataMovie__details">
-
-                <div class="dataMovie__details__block">
-                    <span class="dataMovie__sectionName">Sinopsis</span>
-                    <span class="dataMovie__timeMovie">{{homeCtrl.movieSelected.runtime.hours}}h{{homeCtrl.movieSelected.runtime.minutes}}</span>
-                </div>
-
-                <div class="dataMovie__details__block">
-                    <div>
-                        <span class="dataMovie__tag" ng-repeat="genre in homeCtrl.movieSelected.genres track by genre.id">{{genre.name}}</span>
-                    </div>
-
-                    <div class="dataMovie__stadistics">
-                        <div class="stadisticsIcons stadisticsIcons--fav">{{homeCtrl.movieSelected.ratings.imdb}}</div>
-                        <div class="stadisticsIcons stadisticsIcons--rotenTomatoes">{{homeCtrl.movieSelected.ratings.rotten}}%</div>
-                        <div class="stadisticsIcons">{{homeCtrl.movieSelected.ratings.metacritic}}%</div>
-                    </div>
-                </div>
-
-                <p class="dataMovie__paragraph">
-                    With our time on Earth coming to an end, a team of explorers undertakes the most important mission in human history; traveling
-                    beyond this galaxy to discover whether mankind has a future among the stars. (C) Paramount
-                </p>
-                <div class="dataMovie__trailer-section">
-                    <span class="dataMovie__sectionName">Tráiler</span>
-
-                    <iframe class="dataMovie__video" width="600" height="480" ng-src="{{homeCtrl.movieSelected.video}}" frameborder="0" gesture="media"
-                        allow="encrypted-media" allowfullscreen></iframe>
-
-                </div>
-            </div>
-
-        </article>
-        <div class="substitles">
-            Subs:
-            <span class="substitles__item">en</span>
-            <span class="substitles__item">es</span>
-            <span class="substitles__item">de</span>
-        </div>
-
-        <p>Películas similares</p>
-        <div class="movieDetails__similar-movies">
-            <img src="{{movie.poster}}" ng-repeat="movie in homeCtrl.similarMovies track by movie.id" ng-click="homeCtrl.getMovieDetails(movie.id)">
-        </div>
-
-    </section>
+<div class="backgroundAlfa" ng-show="homeCtrl.isMovieSelected">
 </div>
+
+<section class="movieDetails" ng-show="homeCtrl.isMovieSelected">
+
+    <div class="movieDetails__header">
+        <div class="movieDetails__header__title">
+            <h2>{{homeCtrl.movieSelected.title}}</h2>
+            <h3>{{homeCtrl.movieSelected.year}}</h3>
+        </div>
+        <img src="../src/img/close-movie-details.png" alt="close button" ng-click="homeCtrl.closeMovieDetails()">
+    </div>
+
+    <article class="dataMovie">
+        <img src="{{homeCtrl.movieSelected.poster}}" alt="">
+        <div class="dataMovie__details">
+
+            <div class="dataMovie__details__block">
+                <span class="dataMovie__sectionName">Sinopsis</span>
+                <span class="dataMovie__timeMovie">{{homeCtrl.movieSelected.runtime.hours}}h{{homeCtrl.movieSelected.runtime.minutes}}</span>
+            </div>
+
+            <div class="dataMovie__details__block">
+                <div>
+                    <span class="dataMovie__tag" ng-repeat="genre in homeCtrl.movieSelected.genres track by genre.id">{{genre.name}}</span>
+                </div>
+
+                <div class="dataMovie__stadistics">
+                    <div class="stadisticsIcons stadisticsIcons--fav">{{homeCtrl.movieSelected.ratings.imdb}}</div>
+                    <div class="stadisticsIcons stadisticsIcons--rotenTomatoes">{{homeCtrl.movieSelected.ratings.rotten}}%</div>
+                    <div class="stadisticsIcons">{{homeCtrl.movieSelected.ratings.metacritic}}%</div>
+                </div>
+            </div>
+
+            <p class="dataMovie__paragraph">
+                {{homeCtrl.movieSelected.overview}}
+            </p>
+            <button class="btn btn-green" ng-if="homeCtrl.isUserSingIn" ng-class="{'btn-red':homeCtrl.checkFavMovies(homeCtrl.movieSelected.id)}" ng-click="homeCtrl.addFav(homeCtrl.movieSelected.id)">Favorita</button>
+            <button class="btn btn-green" ng-if="homeCtrl.isUserSingIn" ng-class="{'btn-red':homeCtrl.checkViewMovie(homeCtrl.movieSelected.id)}" ng-click="homeCtrl.addViewMovies(homeCtrl.movieSelected.id)">Para más tarde</button>
+            <button class="btn btn-green" ng-if="homeCtrl.isUserSingIn" ng-class="{'btn-red':homeCtrl.checkMoviesToWatch(homeCtrl.movieSelected.id)}" ng-click="homeCtrl.addMoviesToWatch(homeCtrl.movieSelected.id)">Vista</button>
+            <div class="dataMovie__trailer-section">
+                <span class="dataMovie__sectionName">Tráiler</span>
+                
+
+                <iframe class="dataMovie__video" width="610" height="370" ng-src="{{homeCtrl.movieSelected.video}}" frameborder="0" gesture="media"
+                    allow="encrypted-media" allowfullscreen></iframe>
+
+            </div>
+        </div>
+
+    </article>
+    <div class="substitles">
+        Subs:
+        <span class="substitles__item">en</span>
+        <span class="substitles__item">es</span>
+        <span class="substitles__item">de</span>
+    </div>
+
+    <p>Películas similares</p>
+    <div class="movieDetails__similar-movies">
+        <img src="{{movie.poster}}" ng-repeat="movie in homeCtrl.similarMovies track by movie.id" ng-click="homeCtrl.getMovieDetails(movie.id)">
+    </div>
+
+</section>
 
 <nav class="nav">
     <div class="wrapper">
-        <img src="../src/img/logo.png" alt="peliseoi logo" class="nav__logo">
+        <img src="../src/img/logo.png" alt="peliseoi logo" class="nav__logo" ng-click="homeCtrl.getPopularMovies()">
         <ul class="nav__menu">
             <!-- TODO a> -->
-            <li ng-click="homeCtrl.getDiscoverMovies()">Descubrir</li>
-            <li ng-click="homeCtrl.getTopRated()">Mejor valoradas</li>
-            <li ng-click="homeCtrl.getPopularMovies()">Populares ahora</li>
+            <li ng-click="homeCtrl.getDiscoverMovies()" ng-class="{'nav__li-selected':true}">Descubrir</li>
+            <li ng-click="homeCtrl.getTopRated()" ng-if="!homeCtrl.isUserSingIn">Mejor valoradas</li>
+            <li ng-click="homeCtrl.getPopularMovies()" ng-if="!homeCtrl.isUserSingIn">Populares ahora</li>
             <li ng-click="homeCtrl.getUpcomingMovies()">Próximamente</li>
+            <li ng-click="homeCtrl.showFav()" ng-if="homeCtrl.isUserSingIn">Favoritas</li>
+            <li ng-click="homeCtrl.showViewMovies()" ng-if="homeCtrl.isUserSingIn">Vistas</li>
+            <li ng-click="homeCtrl.showMoviesToWatch()" ng-if="homeCtrl.isUserSingIn">Para más tarde</li>
         </ul>
         <input type="text" class="inputText inputText--search" placeholder="Encuentra tu película favorita" ng-model="homeCtrl.search.title"
             ng-keyup="homeCtrl.searchMovieByTitle()">
     </div>
 </nav>
+
+<div class="secondary-nav">
+    <div>
+        <button class="btn btn-large-selected">Películas</button>
+        <!-- <button class="btn btn-large">Series</button> -->
+    </div>
+    <div>
+        <button class="btn btn-sing" ng-click="homeCtrl.showSingIn()" ng-if="!homeCtrl.isUserSingIn">Sing in</button>
+        <a href="#!/singup" class="btn btn-sing"  ng-if="!homeCtrl.isUserSingIn">Sing up</a>
+        <button class="btn btn-sing"  ng-if="homeCtrl.isUserSingIn" ng-click="homeCtrl.singOut()">Log out</button>
+        <!-- <button class="btn btn-sing"  ng-if="homeCtrl.isUserSingIn">Modify</button> -->
+    </div>
+
+</div>
+
+<div class="singIn-nav" ng-if="!homeCtrl.isUserSingIn">
+    <input class="inputText" type="text" placeholder="Email" ng-model="homeCtrl.currentUser.email">
+    <input class="inputText" type="password" placeholder="Password" ng-model="homeCtrl.currentUser.password">
+    <button class="btn btn-sing" ng-click="homeCtrl.singIn()">Log in</button>
+
+</div>
 
 <div class="wrapper">
     <div class="mainContainer">
@@ -81,12 +109,13 @@
 
             <div class="dashboard__navbar">
                 <img src="../src/img/filter-icon.png" alt="filter icon">
-                <button class="btn btn--filter">Filtrar</button>
                 <button class="btn btn--filter-delete" ng-click="homeCtrl.deleteSearch()">Borrar</button>
             </div>
 
             <div class="dashboard__trackbars">
-                <div class="trackbar">
+                <rzslider rz-slider-model="homeCtrl.sliderYear.minValue" rz-slider-high="homeCtrl.sliderYear.maxValue" rz-slider-options="homeCtrl.sliderYear.options"></rzslider>
+                <rzslider rz-slider-model="homeCtrl.sliderAverage.minValue" rz-slider-high="homeCtrl.sliderAverage.maxValue" rz-slider-options="homeCtrl.sliderAverage.options"></rzslider>
+                <!-- <div class="trackbar">
                     <div class="trackbar__top">
                         <span class="dashboard__title">Año</span>
                         <span class="trackbar__data-filter">1979-2015</span>
@@ -105,18 +134,19 @@
                         <span class="trackbar__regulartor-left">5</span>
                         <span class="trackbar__regulartor-right">10</span>
                     </div>
-                </div>
+                </div> -->
             </div>
 
             <div class="dashboard__genders">
                 <span class="dashboard__title">Género</span>
-                <button class="btn btn-gender" ng-class="{'btn-gender-selected': clicked}" ng-repeat="genre in homeCtrl.genres" ng-click="homeCtrl.search.genreIds = genre.id;clicked=true;">{{genre.name}}</button>
+                <button class="btn btn-gender" ng-class="{'btn-gender-selected': homeCtrl.checkButtonGenre(genre.id)}" ng-repeat="genre in homeCtrl.genres"
+                    ng-click="homeCtrl.getFilteredMovies(genre.id)">{{genre.name}}</button>
             </div>
         </aside>
 
         <section class="filmShowcase">
             <div class="filmShowcase__navbar">
-                <p>
+                <p ng-if="!homeCtrl.isViewOwnMovies">
                     <span class="bold-remark">{{homeCtrl.totalResults}}</span>
                     películas encontradas
                 </p>
@@ -128,7 +158,8 @@
                 </select>
             </div>
             <div class="filmShowcase__showcase">
-                <div class="movieCard" ng-repeat="movie in homeCtrl.movies | filter:homeCtrl.search | orderBy:homeCtrl.selectOrder track by movie.id"
+                <div class="filmShowcase__showcase--not-movie" ng-if="homeCtrl.totalResults===0">No hay resultados.</div>
+                <!-- <div class="movieCard" ng-repeat="movie in homeCtrl.movies | filter:homeCtrl.search | orderBy:homeCtrl.selectOrder track by movie.id"
                     style="background-image: url('{{movie.poster}}');" ng-click="homeCtrl.getMovieDetails(movie.id)">
                     <div class="movieCard__details">
                         <div class="movieCard__Title">
@@ -141,11 +172,12 @@
                             <div class="stadisticsIcons">{{movie.ratings.metacritic}}%</div>
                         </div>
                     </div>
+                </div> -->
+                <movie-card ng-repeat="movie in homeCtrl.movies | orderBy:homeCtrl.selectOrder track by movie.id"
+                movie="movie" ng-click="homeCtrl.getMovieDetails(movie.id)"></movie-card>
 
-                </div>
-                
                 <!-- No carga en caliente -->
-                <div class="load-box">
+                <div class="load-box"  ng-if="!homeCtrl.isViewOwnMovies">
                     <p ng-show="homeCtrl.loadMovies">Cargando películas</p>
                     <div class="load-spinner" ng-show="homeCtrl.loadMovies"></div>
                 </div>

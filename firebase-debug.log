@@ -1,0 +1,45 @@
+[debug] [2017-12-20T11:11:07.418Z] ----------------------------------------------------------------------
+[debug] [2017-12-20T11:11:07.418Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Francisco.DESKTOP-FAKIDUT\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase deploy
+[debug] [2017-12-20T11:11:07.418Z] CLI Version:   3.16.0
+[debug] [2017-12-20T11:11:07.418Z] Platform:      win32
+[debug] [2017-12-20T11:11:07.418Z] Node Version:  v6.11.2
+[debug] [2017-12-20T11:11:07.418Z] Time:          Wed Dec 20 2017 11:11:07 GMT+0000 (Hora estándar GMT)
+[debug] [2017-12-20T11:11:07.418Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-12-20T11:11:07.438Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-12-20T11:11:07.438Z] > authorizing via signed-in user
+[debug] [2017-12-20T11:11:07.438Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2017-12-20T11:11:07.438Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ { refresh_token: '1/cP97B38yvptl_erSZDh2di6I0mCc3gCXIHYlS2u1tfM',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Wed Dec 20 2017 11:11:07 GMT+0000 (Hora estándar GMT)
+[debug] [2017-12-20T11:11:07.762Z] <<< HTTP RESPONSE 200
+[debug] [2017-12-20T11:11:07.778Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/peliseoi-675a0  
+  
+ Wed Dec 20 2017 11:11:07 GMT+0000 (Hora estándar GMT)
+[debug] [2017-12-20T11:11:08.579Z] <<< HTTP RESPONSE 200
+[debug] [2017-12-20T11:11:08.579Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/peliseoi-675a0/tokens  
+  
+ Wed Dec 20 2017 11:11:08 GMT+0000 (Hora estándar GMT)
+[debug] [2017-12-20T11:11:09.360Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'peliseoi-675a0'...
+[info] 
+[info] i  deploying hosting
+[info] i  hosting: preparing ./ directory for upload...
+[debug] [2017-12-20T11:11:10.994Z] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/peliseoi-675a0/uploads/-L0nbfKNL4tDhKUHfWr9?fileCount=82&message=  
+  
+ Wed Dec 20 2017 11:11:10 GMT+0000 (Hora estándar GMT)
+[debug] [2017-12-20T11:14:12.604Z] Error: socket hang up
+    at createHangUpError (_http_client.js:254:15)
+    at TLSSocket.socketOnEnd (_http_client.js:346:23)
+    at emitNone (events.js:91:20)
+    at TLSSocket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickDomainCallback (internal/process/next_tick.js:128:9)
+[error] 
+[error] Error: Server Error. socket hang up

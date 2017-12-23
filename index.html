@@ -1,31 +1,63 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="PelisEOI">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="libs/angular-csp.css">
+    <link rel="stylesheet" href="libs/components/rzslider/rzslider.css">
+    <link rel="stylesheet" href="libs/animate.css">
     <link rel="stylesheet" href="css/main.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="libs/magic.css">
+    <link rel="stylesheet" href="css/miscelaneus.css">
+    <title>PelisEOI</title>
 </head>
+
 <body>
     <div ng-view></div>
 
     <!-- Third party libraries -->
     <script src="libs/angular.js"></script>
+    <script src="libs/components/rzslider/rzslider.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.4/ui-bootstrap-tpls.min.js"></script>
     <script src="libs/angular-route.min.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
+
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyAq2hCDzTjkDm1DV9BrD-EQposFWP5dYks",
+            authDomain: "peliseoi-675a0.firebaseapp.com",
+            databaseURL: "https://peliseoi-675a0.firebaseio.com",
+            projectId: "peliseoi-675a0",
+            storageBucket: "peliseoi-675a0.appspot.com",
+            messagingSenderId: "1057560941397"
+        };
+        firebase.initializeApp(config);
+    </script>
+
 
     <!-- App -->
     <script src="js/app.config.js"></script>
 
     <!-- Services & Factories -->
     <script src="js/factories/MoviesProvider.factory.js"></script>
+    <script src="js/factories/firebaseProvider.factory.js"></script>
+    <script src="js/factories/UrlMangerProvider.factory.js"></script>
 
     <!-- Components -->
-    
+    <script src="components/movieCard/movieCard.component.js"></script>
+
     <!-- Controllers -->
     <script src="js/controllers/home.controller.js"></script>
+    <script src="js/controllers/singUp.controller.js"></script>
 
 
 </body>
+
 </html>

@@ -1,0 +1,14 @@
+<div class="modal--sing-up">
+    <form class="form--sing-up" name="singUpCtrl.registerForm">
+        <h2>Registro de Usuario</h2>
+        <input class="inputText" type="text" placeholder="Nombre" ng-model="singUpCtrl.newUser.name" ng-minlength="3" ng-maxlength="25"
+        ng-required="true">
+        <input class="inputText" type="email" placeholder="Email" ng-model="singUpCtrl.newUser.email" ng-required="true">
+        <input class="inputText" type="password" placeholder="Contraseña" ng-model="singUpCtrl.newUser.password" ng-required="true">
+        <input class="inputText" type="password" placeholder="Repita la contraseña" ng-model="singUpCtrl.newUser.repeatPassword"
+        ng-required="true">
+        <input class="inputText" type="date" placeholder="Fecha de nacimiento" ng-model="singUpCtrl.newUser.birth" ng-required="true">
+        <button class="btn btn-green" ng-disabled="singUpCtrl.registerForm.$invalid" ng-click="singUpCtrl.registerNewUser()">Registrarse</button>
+        <a href="/#!/">Volver</a>
+    </form>
+</div>

@@ -1,0 +1,233 @@
+
+/* /////////////////////////////// MISCELANEUS //////////////////////////////// */
+
+/* ______________________________: Icons Aspects :_____________________________ */
+.stadisticsIcons{
+    height: 25px;
+    line-height: 25px;
+    background-image: url('../src/img/stadistics-icons.png');
+    background-position-y: 0;
+    background-repeat: no-repeat;
+    padding-left: 30px;
+}
+
+.stadisticsIcons--rotenTomatoes{
+    background-image: url('../src/img/stadistics-icons.png');
+    background-position-y: -25px;
+}
+
+.stadisticsIcons--fav{
+    background-image: url('../src/img/stadistics-icons.png');
+    background-position-y: -50px;
+}
+
+.stadisticsIcons--favUser{
+    background-image: url('../src/img/user-movie-card-icons.png');
+    background-position-y: -25px;
+    opacity: 0.4;    
+}
+
+.stadisticsIcons--favUser:hover{
+    opacity: 1;    
+}
+
+.stadisticsIcons--view{
+    background-image: url('../src/img/user-movie-card-icons.png');
+    background-position-y: -50px;
+    opacity: 0.4;
+}
+
+.stadisticsIcons--view:hover{
+    opacity: 1;
+}
+
+.stadisticsIcons--toWatch{
+    background-image: url('../src/img/user-movie-card-icons.png');
+    background-position-y: 0px;
+    opacity: 0.4;
+}
+
+.stadisticsIcons--toWatch:hover{
+    opacity: 1;
+}
+
+/* ______________________________: Text Aspects :______________________________ */
+.bold{
+    font-weight: 800;
+}
+
+.bold-remark{
+    color: #1b2126;
+    font-weight: 700;
+}
+/* _____________________________: Button Aspects :_____________________________ */
+.btn{
+    border: 0;
+    background-color: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    margin: 8px;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.btn:focus{
+    outline: none
+}
+
+.btn--filter{
+    color: #5c6269;
+}
+
+.btn--filter-delete{
+    color: #f3644f;
+}
+
+.btn--filter:hover{
+    font-weight: 700;
+}
+
+.btn--filter-delete:hover{
+    font-weight: 700;
+}
+
+.btn-gender{
+    width: 115px;
+    height: 33px;
+    line-height: 33px;
+    text-align: center;
+    color: #8e9297;
+    border: 2px solid #e9ecee;
+    border-radius: 6px;
+    margin: 9px 8px 0 0;
+}
+
+.btn-gender:hover{
+    color: #75787c;
+    border: 2px solid #c2c5c7;
+}
+.btn-gender-selected{
+    width: 115px;
+    height: 33px;
+    line-height: 33px;
+    text-align: center;
+    color: #2883d8;
+    border: 2px solid #2883d8;
+    border-radius: 6px;
+    margin: 9px 8px 0 0;
+}
+.btn-gender-selected:hover{
+    color: #2883d8;
+    border: 2px solid #2883d8;
+}
+
+.btn-large{
+    width: 150px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    background: #2883d8;
+    color: white;
+    font-size: 1.5em;
+    font-weight: 500;
+    border-radius: 2px;
+}
+.btn-large-selected{
+    width: 150px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    background: #1c5688;
+    color: white;
+    font-size: 1.5em;
+    font-weight: 500;
+    border-radius: 2px;
+}
+.btn-sing, .btn-green{
+    width: 70px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    background: #bee467;
+    color: rgb(88, 94, 74);
+    font-size: 1em;
+    font-weight: 500;
+    border-radius: 6px;
+}
+.btn-green{
+    width: 150px;
+}
+.btn-red{
+    background: #e48467;
+    color: rgb(94, 78, 74);
+}
+
+/* _____________________________: Inputs Aspects :_____________________________ */
+.inputText{
+    width: 370px;
+    height: 38px;
+    line-height: 38px;
+    padding-left: 20px;
+    color: rgb(29, 29, 29);
+    background: white;
+    border: 0;
+    border-radius: 5px;
+}
+
+.inputText:focus{
+    outline: none;
+}
+
+.inputText--search{
+    color: #1b2126;
+    background-color: #5c6269;
+    background-image: url('../src/img/loupe.png');
+    background-repeat: no-repeat;
+    background-position: 10px 10px; 
+    padding-left: 35px;
+}
+
+.inputText--search::placeholder{
+    color: rgb(29, 29, 29);
+}
+
+/* _____________________________: Select Aspects :_____________________________ */
+.select{
+    border: 0;
+    background-color: rgba(0, 0, 0, 0);
+    color: #5c6269;
+}
+.select:focus{
+    outline: none
+}
+
+/* ____________________________: Spinner Aspects :_____________________________ */
+.load-spinner {
+    border: 5px solid #333;
+    border-radius: 30px;
+    height: 30px;
+    margin: -15px 0 0 -15px;
+    opacity: 0;
+    width: 30px;
+ 
+    animation: pulsate 1s ease-out;
+    animation-iteration-count: infinite;
+}
+
+@keyframes pulsate {
+    0% {
+      transform: scale(.1);
+      opacity: 0.0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1.2);
+      opacity: 0;
+    }
+}
+
+/* ______________________________: Aux Classes :_______________________________ */
+.no-scrollable{
+    overflow: hidden;
+}
