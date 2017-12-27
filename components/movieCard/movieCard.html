@@ -1,15 +1,14 @@
 <link rel="stylesheet" href="/components/movieCard/movieCard.css">
-<div class="movieCard" style="background-image: url('{{movieCard.movie.poster}}');" ng-click="movieCard.getMovieDetails(movieCard.movie.id)">
-   
+<div class="movieCard" style="background-image: url('{{movieCard.movie.poster}}');" ng-click="movieCard.getDetails({movieId:movieCard.movie.id})">
     <div class="movieCard__details">
         <div class="movieCard__Title">
             <h2>{{movieCard.movie.title}}</h2>
             <h3>+ more</h3>
         </div>
-        <!-- <div class="movieCard__stadistics">
-            <div class="stadisticsIcons stadisticsIcons--favUser"></div>
-            <div class="stadisticsIcons stadisticsIcons--view"></div>
-            <div class="stadisticsIcons stadisticsIcons--toWatch" ng-click="movieCard.addFav(movieCard.movie.id)"></div>
-        </div> -->
+        <div class="movieCard__stadistics">
+            <div class="stadisticsIcons stadisticsIcons--favUser" ng-click="movieCard.addFav(movieCard.movie.id)" ng-class="{opacityOne:movieCard.checkFavMovies(movieCard.movie.id)}"></div>
+            <div class="stadisticsIcons stadisticsIcons--view" ng-click="movieCard.addViewMovies(movieCard.movie.id)" ng-class="{opacityOne:movieCard.checkViewMovie(movieCard.movie.id)}"></div>
+            <div class="stadisticsIcons stadisticsIcons--toWatch" ng-click="movieCard.addMoviesToWatch(movieCard.movie.id)" ng-class="{opacityOne:movieCard.checkMoviesToWatch(movieCard.movie.id)}"></div>
+        </div>
     </div>
 </div>

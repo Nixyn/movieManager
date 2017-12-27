@@ -27,28 +27,16 @@
     opacity: 0.4;    
 }
 
-.stadisticsIcons--favUser:hover{
-    opacity: 1;    
-}
-
 .stadisticsIcons--view{
     background-image: url('../src/img/user-movie-card-icons.png');
     background-position-y: -50px;
     opacity: 0.4;
 }
 
-.stadisticsIcons--view:hover{
-    opacity: 1;
-}
-
 .stadisticsIcons--toWatch{
     background-image: url('../src/img/user-movie-card-icons.png');
     background-position-y: 0px;
     opacity: 0.4;
-}
-
-.stadisticsIcons--toWatch:hover{
-    opacity: 1;
 }
 
 /* ______________________________: Text Aspects :______________________________ */

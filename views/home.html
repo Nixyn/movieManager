@@ -1,4 +1,4 @@
-<div class="backgroundAlfa" ng-show="homeCtrl.isMovieSelected">
+<div class="backgroundAlfa" ng-show="homeCtrl.isMovieSelected" ng-click="homeCtrl.closeMovieDetails()" ng-keyup="homeCtrl.isPressEsc()">
 </div>
 
 <section class="movieDetails" ng-show="homeCtrl.isMovieSelected">
@@ -35,12 +35,15 @@
             <p class="dataMovie__paragraph">
                 {{homeCtrl.movieSelected.overview}}
             </p>
-            <button class="btn btn-green" ng-if="homeCtrl.isUserSingIn" ng-class="{'btn-red':homeCtrl.checkFavMovies(homeCtrl.movieSelected.id)}" ng-click="homeCtrl.addFav(homeCtrl.movieSelected.id)">Favorita</button>
-            <button class="btn btn-green" ng-if="homeCtrl.isUserSingIn" ng-class="{'btn-red':homeCtrl.checkViewMovie(homeCtrl.movieSelected.id)}" ng-click="homeCtrl.addViewMovies(homeCtrl.movieSelected.id)">Para más tarde</button>
-            <button class="btn btn-green" ng-if="homeCtrl.isUserSingIn" ng-class="{'btn-red':homeCtrl.checkMoviesToWatch(homeCtrl.movieSelected.id)}" ng-click="homeCtrl.addMoviesToWatch(homeCtrl.movieSelected.id)">Vista</button>
+            <button class="btn btn-green" ng-if="homeCtrl.isUserSingIn" ng-class="{'btn-red':homeCtrl.checkFavMovies(homeCtrl.movieSelected.id)}"
+                ng-click="homeCtrl.addFav(homeCtrl.movieSelected.id)">Favorita</button>
+            <button class="btn btn-green" ng-if="homeCtrl.isUserSingIn" ng-class="{'btn-red':homeCtrl.checkViewMovie(homeCtrl.movieSelected.id)}"
+                ng-click="homeCtrl.addViewMovies(homeCtrl.movieSelected.id)">Para más tarde</button>
+            <button class="btn btn-green" ng-if="homeCtrl.isUserSingIn" ng-class="{'btn-red':homeCtrl.checkMoviesToWatch(homeCtrl.movieSelected.id)}"
+                ng-click="homeCtrl.addMoviesToWatch(homeCtrl.movieSelected.id)">Vista</button>
             <div class="dataMovie__trailer-section">
                 <span class="dataMovie__sectionName">Tráiler</span>
-                
+
 
                 <iframe class="dataMovie__video" width="610" height="370" ng-src="{{homeCtrl.movieSelected.video}}" frameborder="0" gesture="media"
                     allow="encrypted-media" allowfullscreen></iframe>
@@ -68,13 +71,13 @@
         <img src="../src/img/logo.png" alt="peliseoi logo" class="nav__logo" ng-click="homeCtrl.getPopularMovies()">
         <ul class="nav__menu">
             <!-- TODO a> -->
-            <li ng-click="homeCtrl.getDiscoverMovies()" ng-class="{'nav__li-selected':true}">Descubrir</li>
-            <li ng-click="homeCtrl.getTopRated()" ng-if="!homeCtrl.isUserSingIn">Mejor valoradas</li>
-            <li ng-click="homeCtrl.getPopularMovies()" ng-if="!homeCtrl.isUserSingIn">Populares ahora</li>
-            <li ng-click="homeCtrl.getUpcomingMovies()">Próximamente</li>
-            <li ng-click="homeCtrl.showFav()" ng-if="homeCtrl.isUserSingIn">Favoritas</li>
-            <li ng-click="homeCtrl.showViewMovies()" ng-if="homeCtrl.isUserSingIn">Vistas</li>
-            <li ng-click="homeCtrl.showMoviesToWatch()" ng-if="homeCtrl.isUserSingIn">Para más tarde</li>
+            <li ng-click="homeCtrl.getDiscoverMovies()" ng-class="{'nav__li-selected':homeCtrl.view == 'discover'}">Descubrir</li>
+            <li ng-click="homeCtrl.getTopRated()" ng-if="!homeCtrl.isUserSingIn" ng-class="{'nav__li-selected':homeCtrl.view == 'topRated'}">Mejor valoradas</li>
+            <li ng-click="homeCtrl.getPopularMovies()" ng-if="!homeCtrl.isUserSingIn" ng-class="{'nav__li-selected':homeCtrl.view == 'popular'}">Populares ahora</li>
+            <li ng-click="homeCtrl.getUpcomingMovies()" ng-class="{'nav__li-selected':homeCtrl.view == 'upcoming'}">Próximamente</li>
+            <li ng-click="homeCtrl.showFav()" ng-if="homeCtrl.isUserSingIn" ng-class="{'nav__li-selected':homeCtrl.view == 'favourites'}">Favoritas</li>
+            <li ng-click="homeCtrl.showViewMovies()" ng-if="homeCtrl.isUserSingIn" ng-class="{'nav__li-selected':homeCtrl.view == 'viewMovies'}">Vistas</li>
+            <li ng-click="homeCtrl.showMoviesToWatch()" ng-if="homeCtrl.isUserSingIn" ng-class="{'nav__li-selected':homeCtrl.view == 'MoviesToWatch'}">Para más tarde</li>
         </ul>
         <input type="text" class="inputText inputText--search" placeholder="Encuentra tu película favorita" ng-model="homeCtrl.search.title"
             ng-keyup="homeCtrl.searchMovieByTitle()">
@@ -88,8 +91,8 @@
     </div>
     <div>
         <button class="btn btn-sing" ng-click="homeCtrl.showSingIn()" ng-if="!homeCtrl.isUserSingIn">Sing in</button>
-        <a href="#!/singup" class="btn btn-sing"  ng-if="!homeCtrl.isUserSingIn">Sing up</a>
-        <button class="btn btn-sing"  ng-if="homeCtrl.isUserSingIn" ng-click="homeCtrl.singOut()">Log out</button>
+        <a href="#!/singup" class="btn btn-sing" ng-if="!homeCtrl.isUserSingIn">Sing up</a>
+        <button class="btn btn-sing" ng-if="homeCtrl.isUserSingIn" ng-click="homeCtrl.singOut()">Log out</button>
         <!-- <button class="btn btn-sing"  ng-if="homeCtrl.isUserSingIn">Modify</button> -->
     </div>
 
@@ -113,7 +116,9 @@
             </div>
 
             <div class="dashboard__trackbars">
+                <span class="dashboard__title">Año</span>
                 <rzslider rz-slider-model="homeCtrl.sliderYear.minValue" rz-slider-high="homeCtrl.sliderYear.maxValue" rz-slider-options="homeCtrl.sliderYear.options"></rzslider>
+                <span class="dashboard__title">Nota IMDB</span>
                 <rzslider rz-slider-model="homeCtrl.sliderAverage.minValue" rz-slider-high="homeCtrl.sliderAverage.maxValue" rz-slider-options="homeCtrl.sliderAverage.options"></rzslider>
                 <!-- <div class="trackbar">
                     <div class="trackbar__top">
@@ -151,33 +156,22 @@
                     películas encontradas
                 </p>
 
-                <select class="select" ng-model="homeCtrl.selectOrder">
-                    <option value="">Ordenar</option>
-                    <option value="name">Nombre</option>
-                    <option value="year">Fecha</option>
+                <select class="select" ng-model="homeCtrl.search.sort_by" ng-change="homeCtrl.getFilteredMovies()" ng-if="!homeCtrl.isViewOwnMovies">
+                    <option value="" selected>Ordenar</option>
+                    <option value="popularity">Popularity</option>
+                    <option value="release_date">Release date</option>
+                    <option value="primary_release_date">Primary release date</option>
+                    <option value="original_title">Original title</option>
+                    <option value="vote_average">Vote average</option>
+                    <option value="vote_count">Vote count</option>
                 </select>
             </div>
             <div class="filmShowcase__showcase">
                 <div class="filmShowcase__showcase--not-movie" ng-if="homeCtrl.totalResults===0">No hay resultados.</div>
-                <!-- <div class="movieCard" ng-repeat="movie in homeCtrl.movies | filter:homeCtrl.search | orderBy:homeCtrl.selectOrder track by movie.id"
-                    style="background-image: url('{{movie.poster}}');" ng-click="homeCtrl.getMovieDetails(movie.id)">
-                    <div class="movieCard__details">
-                        <div class="movieCard__Title">
-                            <h2>{{movie.title}}</h2>
-                            <h3>+ more</h3>
-                        </div>
-                        <div class="movieCard__stadistics">
-                            <div class="stadisticsIcons stadisticsIcons--fav">{{movie.ratings.imdb}}</div>
-                            <div class="stadisticsIcons stadisticsIcons--rotenTomatoes">{{movie.ratings.rotten}}%</div>
-                            <div class="stadisticsIcons">{{movie.ratings.metacritic}}%</div>
-                        </div>
-                    </div>
-                </div> -->
-                <movie-card ng-repeat="movie in homeCtrl.movies | orderBy:homeCtrl.selectOrder track by movie.id"
-                movie="movie" ng-click="homeCtrl.getMovieDetails(movie.id)"></movie-card>
+                <movie-card ng-repeat="movie in homeCtrl.movies track by movie.id" movie="movie" get-details="homeCtrl.getMovieDetails(movieId)"
+                    movies="homeCtrl.movies" current-user="homeCtrl.currentUser"></movie-card>
 
-                <!-- No carga en caliente -->
-                <div class="load-box"  ng-if="!homeCtrl.isViewOwnMovies">
+                <div class="load-box" ng-if="!homeCtrl.isViewOwnMovies">
                     <p ng-show="homeCtrl.loadMovies">Cargando películas</p>
                     <div class="load-spinner" ng-show="homeCtrl.loadMovies"></div>
                 </div>

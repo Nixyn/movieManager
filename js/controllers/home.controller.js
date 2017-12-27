@@ -14,6 +14,7 @@
         vm.search = {};
         vm.similarMovies = [];
         vm.requestSearchMovieByTitle = false;
+        vm.view = 'popular';
         vm.isMovieSelected = false;
         vm.movieSelected = {};
         vm.totalResults = 0;
@@ -55,8 +56,8 @@
         vm.filterParams = {
             title: vm.search.title,
             language: 'es',
-            country: 'US',
-            sort_by: 'popularity.desc',
+            country: 'ES',
+            sort_by: vm.search.sort_by,
             adultContent: false,
             videoContent: false,
             smallerYear: vm.sliderYear.minValue,
@@ -80,15 +81,9 @@
         vm.showSingIn = showSingIn;
         vm.singIn = singIn;
         vm.singOut = singOut;
-        vm.addFav = addFav;
-        vm.addViewMovies = addViewMovies;
-        vm.addMoviesToWatch = addMoviesToWatch;
         vm.showFav = showFav;
         vm.showViewMovies = showViewMovies;
         vm.showMoviesToWatch = showMoviesToWatch;
-        vm.checkFavMovies = checkFavMovies;
-        vm.checkViewMovie = checkViewMovie
-        vm.checkMoviesToWatch = checkMoviesToWatch
 
         activate();
 
@@ -97,6 +92,8 @@
         function activate() {
             MoviesProvider.getGenres(vm.filterParams).then(response => vm.genres = response);
             getPopularMovies();
+            let ngScope = document.querySelector('.ng-scope');
+            ngScope.scrollTop = 0;
 
             var user = firebase.auth().currentUser;
             if (user) {
@@ -104,7 +101,7 @@
                     vm.currentUser = response;
                     vm.currentUser.uid = response.uid;
                     vm.isUserSingIn = true;
-
+                    alert();
                 });
             }
         }
@@ -125,22 +122,26 @@
         }
 
         function getPopularMovies() {
+            vm.view = 'popular';
             MoviesProvider.getPopularMovies(vm.filterParams).then(moviesRecived);
             withDashboard();
         }
 
         function getTopRated() {
+            vm.view = 'topRated';
             MoviesProvider.getTopRated(vm.filterParams).then(moviesRecived);
             withoutDashboard();
 
         }
 
         function getDiscoverMovies() {
+            vm.view = 'discover';
             MoviesProvider.getDiscoverMovies(vm.filterParams).then(moviesRecived);
             withDashboard();
         }
 
         function getUpcomingMovies() {
+            vm.view = 'upcoming';
             MoviesProvider.getUpcomingMovies(vm.filterParams).then(moviesRecived);
             withoutDashboard();
 
@@ -157,8 +158,8 @@
 
         function getMovieDetails(movieId) {
             vm.isMovieSelected = true;
-            MoviesProvider.getMovieDetails(movieId,vm.filterParams).then(response => vm.movieSelected = response);
-            MoviesProvider.getSimilarMovies(movieId,vm.filterParams).then(response => vm.similarMovies = response.movies);
+            MoviesProvider.getMovieDetails(movieId, vm.filterParams).then(response => vm.movieSelected = response);
+            MoviesProvider.getSimilarMovies(movieId, vm.filterParams).then(response => vm.similarMovies = response.movies);
             disableMainScroll();
         }
 
@@ -167,7 +168,7 @@
             enableMainScroll();
         }
 
-        function getFilteredMovies(genreId = null) {
+        function getFilteredMovies(genreId = null) { // Se puede evitar usar el argumento
             let toggle = checkButtonGenre(genreId);
             if (!toggle) vm.filterParams.genresFilter.push(genreId);
             if (toggle) vm.filterParams.genresFilter = vm.filterParams.genresFilter.filter(valor => valor != genreId);
@@ -176,6 +177,7 @@
             vm.filterParams.largerYear = vm.sliderYear.maxValue;
             vm.filterParams.smallerAverage = vm.sliderAverage.minValue;
             vm.filterParams.largerAverage = vm.sliderAverage.maxValue;
+            vm.filterParams.sort_by = vm.search.sort_by;
 
             MoviesProvider.getFilteredMovies(vm.filterParams).then(moviesRecived);
         }
@@ -183,27 +185,6 @@
         function checkButtonGenre(genreId) {
             let isExistGenre = vm.filterParams.genresFilter.filter(element => element == genreId);
             if (isExistGenre.length > 0) return true;
-            return false;
-        }
-
-        function checkFavMovies(movieId) {
-            if (!vm.currentUser.favMovies) vm.currentUser.favMovies = [];                        
-            let isMovieFav = vm.currentUser.favMovies.filter(movie => movie.id === movieId);
-            if (isMovieFav.length > 0) return true;
-            return false;
-        }
-
-        function checkViewMovie(movieId) {
-            if (!vm.currentUser.viewMovies) vm.currentUser.viewMovies = [];            
-            let isMovieViewed = vm.currentUser.viewMovies.filter(movie => movie.id === movieId);
-            if (isMovieViewed.length > 0) return true;
-            return false;
-        }
-
-        function checkMoviesToWatch(movieId) {
-            if (!vm.currentUser.moviesToWatch) vm.currentUser.moviesToWatch = [];            
-            let isMoviesToWatch = vm.currentUser.moviesToWatch.filter(movie => movie.id === movieId);
-            if (isMoviesToWatch.length > 0) return true;
             return false;
         }
 
@@ -225,10 +206,10 @@
                     FBP.loadUser().then(response => {
                         vm.currentUser = response;
                         vm.currentUser.uid = uidUser;
+                        $scope.$apply();
 
                     });
                 }
-
                 $scope.$apply();
             });;
 
@@ -247,44 +228,22 @@
             FBP.singOutUser();
         }
 
-        function addFav(movieId) {
-            let movie = vm.movies.find(movie => movie.id === movieId);
-            if (vm.currentUser.favMovies.includes(movie)) return;
-            if (!vm.currentUser.favMovies) vm.currentUser.favMovies = [];
-            console.log(vm.currentUser)
-            vm.currentUser.favMovies.push(movie);
-            FBP.updateUser(vm.currentUser);
-        }
-
-        function addViewMovies(movieId) {
-            let movie = vm.movies.find(movie => movie.id === movieId);
-            if (vm.currentUser.viewMovies.includes(movie)) return;
-            if (!vm.currentUser.viewMovies) vm.currentUser.viewMovies = [];
-            vm.currentUser.viewMovies.push(movie);
-            FBP.updateUser(vm.currentUser);
-        }
-
-        function addMoviesToWatch(movieId) {
-            let movie = vm.movies.find(movie => movie.id === movieId);
-            if (vm.currentUser.moviesToWatch.includes(movie)) return;
-            if (!vm.currentUser.moviesToWatch) vm.currentUser.moviesToWatch = [];
-            vm.currentUser.moviesToWatch.push(movie);
-            FBP.updateUser(vm.currentUser);
-        }
-
         function showFav() {
+            vm.view = 'favourites';
             vm.movies = vm.currentUser.favMovies;
             vm.isViewOwnMovies = true;
             withoutDashboard();
         }
 
         function showViewMovies() {
+            vm.view = 'viewMovies';
             vm.movies = vm.currentUser.viewMovies;
             vm.isViewOwnMovies = true;
             withoutDashboard();
         }
 
         function showMoviesToWatch() {
+            vm.view = 'MoviesToWatch';
             vm.movies = vm.currentUser.moviesToWatch;
             vm.isViewOwnMovies = true;
             withoutDashboard();
@@ -355,6 +314,13 @@
         /////////////////////////////// EVENT LISTENER ///////////////////////////////
         window.addEventListener('scroll', function (e) {
             lazyLoadOfMovies();
+        });
+
+        window.addEventListener('keyup', function (e) {
+            if (e.keyCode == 27 && vm.isMovieSelected == true) { // escape key maps to keycode `27`
+                closeMovieDetails();
+                $scope.$apply();
+            }
         });
 
     }

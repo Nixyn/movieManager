@@ -363,3 +363,18 @@ body{
 .form--sing-up .inputText{
     margin:10px;
 }
+
+.inputText.ng-touched.ng-invalid-maxlength{
+    background: #faa2a2;
+    color: #662a2a;
+}
+
+.inputText.ng-touched.ng-invalid-minlength{
+    background: #faa2a2;
+    color: #662a2a;
+}
+
+.inputText.ng-touched.ng-invalid-email{
+    background: #faa2a2;
+    color: #662a2a;
+}

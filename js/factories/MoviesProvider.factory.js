@@ -52,7 +52,6 @@
         }
 
         function getDiscoverMovies(params) {
-            //UrlMngr.loadLazyLoadUrl();
             return $http.get(UrlMngr.setDiscoverMovies(params))
                 .then(moviesRecived)
         }
@@ -63,7 +62,6 @@
         }
 
         function getMovieDetails(movieId,params) {
-            console.log(UrlMngr.setMovieDetails(movieId,params))
             return $http.get(UrlMngr.setMovieDetails(movieId,params))
                 .then(movieRecived)
                 .then(getRating)
@@ -81,7 +79,6 @@
         }
 
         function getMoreMovies() { 
-            UrlMngr.loadLazyLoadUrl();
             return $http.get(UrlMngr.getLazyLoadUrl())
                 .then(moviesRecived)
         }
@@ -103,7 +100,7 @@
         }
 
         function getRating(movie) {
-            return $http.get('http://www.omdbapi.com/?t=' + movie.title + '&y=' + movie.year + '&apikey=' + vm.omdb.apikey)
+            return $http.get('https://www.omdbapi.com/?t=' + movie.title + '&y=' + movie.year + '&apikey=' + vm.omdb.apikey)
                 .then(movieOmbd => addRatings(movieOmbd, movie));
         }
 
@@ -177,7 +174,7 @@
 
         function addTrailer(videoRequest, movie) {
             let arrayVideos = videoRequest.data.results;
-            console.log(videoRequest)
+
             if (arrayVideos.length > 0)
                 movie.video = $sce.trustAs($sce.RESOURCE_URL, 'https://www.youtube.com/embed/' + arrayVideos[0].key);
 

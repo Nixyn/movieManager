@@ -22,7 +22,6 @@
         }
         /* __________________________: Functions Declaration :_________________________ */
         var service = {
-            loadLazyLoadUrl: loadLazyLoadUrl,
             getLazyLoadUrl: getLazyLoadUrl,
             setGenresList: setGenresList,
             setPopularUrl: setPopularUrl,
@@ -39,13 +38,10 @@
         return service;
 
         ///////////////////////////////// MAIN FUNTIONS /////////////////////////////////
-        function loadLazyLoadUrl() {
+        function getLazyLoadUrl() {
             vm.movieDB.numPage++;
             vm.movieDB.dataUrl.lazyLoadUrl = vm.movieDB.dataUrl.pre_url + '&page=' + vm.movieDB.numPage;
-            return vm.movieDB.dataUrl.lazyLoadUrl;
-        }
-
-        function getLazyLoadUrl() {
+            console.log(vm.movieDB.dataUrl.lazyLoadUrl)
             return vm.movieDB.dataUrl.lazyLoadUrl;
         }
 
@@ -105,7 +101,7 @@
             let randomIndex = parseInt(Math.random() * vm.movieDB.arrayDiscover.length);
             let randomDiscover = vm.movieDB.arrayDiscover[randomIndex];
             let queryArray = urlConstructor(params).concat(['sort_by=' + randomDiscover]).join('&');
-            console.log(randomIndex)
+
             vm.objUrl.endPoint = 'discover';
             vm.objUrl.type = 'movie';
 
@@ -115,6 +111,7 @@
 
         function setFilteredMovies(params) {
             let queryArray = urlConstructor(params).concat([
+                vm.objUrl.sort_by,
                 vm.objUrl.smallerYear,
                 vm.objUrl.largerYear,
                 vm.objUrl.smallerAverage,
@@ -157,7 +154,7 @@
                 type: 'popular',
                 apikey: 'api_key=' + vm.movieDB.apikey,
                 language: 'language=' + params.language + '-US',
-                sort_by: 'sort_by=' + params.sort_by,
+                sort_by: 'sort_by=' + params.sort_by + '.desc',
                 title: 'query=' + params.title,
                 adultContent: 'include_adult=' + params.adultContent,
                 videoContent: 'include_video=' + params.videoContent,
@@ -165,7 +162,7 @@
                 largerYear: 'release_date.lte=' + params.largerYear + '-12-31',
                 smallerAverage: 'vote_average.gte=' + params.smallerAverage,
                 largerAverage: 'vote_average.lte=' + params.largerAverage,
-                genresUrl: 'with_genres=' + params.genresFilter.toString().replace(/,/gi, '%2C'),
+                genresUrl: 'with_genres=' + params.genresFilter.join('%2C'),
                 page: 'page=' + vm.movieDB.numPage //quitar
             }
 
@@ -175,8 +172,6 @@
 
         function checkChangeOfUrlToResetNumPage() {
             let isNotSameUrlAsBefore = vm.movieDB.dataUrl.lazyLoadUrl.indexOf(vm.movieDB.dataUrl.pre_url);
-            console.log(vm.movieDB.dataUrl.lazyLoadUrl)
-            console.log(vm.movieDB.dataUrl.pre_url)
             if (isNotSameUrlAsBefore === -1) vm.movieDB.numPage = 1;
         }
 
@@ -185,8 +180,6 @@
             checkChangeOfUrlToResetNumPage();
             vm.movieDB.dataUrl.url = vm.movieDB.dataUrl.pre_url + '&' + 'page=' + vm.movieDB.numPage;
         }
-
-
 
     }
 })();
