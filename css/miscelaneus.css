@@ -5,36 +5,36 @@
 .stadisticsIcons{
     height: 25px;
     line-height: 25px;
-    background-image: url('../src/img/stadistics-icons.png');
+    background-image: url('movieManager/src/img/stadistics-icons.png');
     background-position-y: 0;
     background-repeat: no-repeat;
     padding-left: 30px;
 }
 
 .stadisticsIcons--rotenTomatoes{
-    background-image: url('../src/img/stadistics-icons.png');
+    background-image: url('movieManager/src/img/stadistics-icons.png');
     background-position-y: -25px;
 }
 
 .stadisticsIcons--fav{
-    background-image: url('../src/img/stadistics-icons.png');
+    background-image: url('movieManager/src/img/stadistics-icons.png');
     background-position-y: -50px;
 }
 
 .stadisticsIcons--favUser{
-    background-image: url('../src/img/user-movie-card-icons.png');
+    background-image: url('movieManager/src/img/user-movie-card-icons.png');
     background-position-y: -25px;
     opacity: 0.4;    
 }
 
 .stadisticsIcons--view{
-    background-image: url('../src/img/user-movie-card-icons.png');
+    background-image: url('movieManager/src/img/user-movie-card-icons.png');
     background-position-y: -50px;
     opacity: 0.4;
 }
 
 .stadisticsIcons--toWatch{
-    background-image: url('../src/img/user-movie-card-icons.png');
+    background-image: url('movieManager/src/img/user-movie-card-icons.png');
     background-position-y: 0px;
     opacity: 0.4;
 }
@@ -166,7 +166,7 @@
 .inputText--search{
     color: #1b2126;
     background-color: #5c6269;
-    background-image: url('../src/img/loupe.png');
+    background-image: url('movieManager/src/img/loupe.png');
     background-repeat: no-repeat;
     background-position: 10px 10px; 
     padding-left: 35px;

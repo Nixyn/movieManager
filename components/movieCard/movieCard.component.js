@@ -9,7 +9,7 @@
     angular
         .module('PelisEOI')
         .component('movieCard', {
-            templateUrl: '/components/movieCard/movieCard.html',
+            templateUrl: '/movieManager/components/movieCard/movieCard.html',
             controller: movieCardController,
             controllerAs: 'movieCard',
             bindings: {
