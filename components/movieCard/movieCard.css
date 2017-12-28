@@ -3,7 +3,7 @@
     width: 270px;
     height: 405px;
     margin: 0 0 30px 30px;
-    background-image: url('../src/img/test-movie-card.png');
+    background-image: url('/movieManager/src/img/test-movie-card.png');
     background-size: 270px 405px;
     cursor: pointer;
     transition:all 0.3s ease;
