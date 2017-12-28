@@ -41,7 +41,7 @@
         function getLazyLoadUrl() {
             vm.movieDB.numPage++;
             vm.movieDB.dataUrl.lazyLoadUrl = vm.movieDB.dataUrl.pre_url + '&page=' + vm.movieDB.numPage;
-            console.log(vm.movieDB.dataUrl.lazyLoadUrl)
+            console.log('lazyURL',vm.movieDB.dataUrl.lazyLoadUrl);
             return vm.movieDB.dataUrl.lazyLoadUrl;
         }
 
@@ -179,6 +179,7 @@
             vm.movieDB.dataUrl.pre_url = vm.objUrl.urlBase + vm.objUrl.endPoint + '/' + vm.objUrl.type + '?' + queryArray;
             checkChangeOfUrlToResetNumPage();
             vm.movieDB.dataUrl.url = vm.movieDB.dataUrl.pre_url + '&' + 'page=' + vm.movieDB.numPage;
+            console.log(vm.movieDB.dataUrl.url)
         }
 
     }

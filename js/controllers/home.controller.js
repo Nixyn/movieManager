@@ -16,6 +16,7 @@
         vm.requestSearchMovieByTitle = false;
         vm.view = 'popular';
         vm.isMovieSelected = false;
+        vm.isLoadMovieSelected = false;
         vm.movieSelected = {};
         vm.totalResults = 0;
         vm.loadMovies = false;
@@ -39,7 +40,6 @@
                 }
             }
         };
-
         vm.sliderAverage = {
             minValue: 0,
             maxValue: 10,
@@ -52,7 +52,6 @@
                 }
             }
         };
-
         vm.filterParams = {
             title: vm.search.title,
             language: 'es',
@@ -80,6 +79,7 @@
         vm.checkButtonGenre = checkButtonGenre;
         vm.showSingIn = showSingIn;
         vm.singIn = singIn;
+        vm.singInWithEnter = singInWithEnter;
         vm.singOut = singOut;
         vm.showFav = showFav;
         vm.showViewMovies = showViewMovies;
@@ -90,20 +90,23 @@
 
         //////////////////////////////// MAIN FUNTIONS ////////////////////////////////
         function activate() {
-            MoviesProvider.getGenres(vm.filterParams).then(response => vm.genres = response);
-            getPopularMovies();
             let ngScope = document.querySelector('.ng-scope');
             ngScope.scrollTop = 0;
 
-            var user = firebase.auth().currentUser;
-            if (user) {
-                FBP.loadUser().then(response => {
-                    vm.currentUser = response;
-                    vm.currentUser.uid = response.uid;
+            MoviesProvider.getGenres(vm.filterParams).then(response => vm.genres = response);
+            getPopularMovies();
+
+            FBP.checkCurrentUser().onAuthStateChanged(function (isUser) {
+                if (isUser) {
                     vm.isUserSingIn = true;
-                    alert();
-                });
-            }
+                    FBP.loadUser().then(response => {
+                        vm.currentUser = response;
+                        vm.currentUser.uid = isUser.uid;
+                        $scope.$apply();
+                    });
+                }
+            });
+
         }
 
         function searchMovieByTitle() {
@@ -142,6 +145,7 @@
 
         function getUpcomingMovies() {
             vm.view = 'upcoming';
+            vm.isViewOwnMovies = false;
             MoviesProvider.getUpcomingMovies(vm.filterParams).then(moviesRecived);
             withoutDashboard();
 
@@ -157,14 +161,31 @@
         }
 
         function getMovieDetails(movieId) {
-            vm.isMovieSelected = true;
-            MoviesProvider.getMovieDetails(movieId, vm.filterParams).then(response => vm.movieSelected = response);
+            if (!vm.isLoadMovieSelected) showMovieDetails();
+            vm.isLoadMovieSelected = true;
+            MoviesProvider.getMovieDetails(movieId, vm.filterParams).then(response => {
+                vm.movieSelected = response;
+                let dataMovie__video = document.querySelector('.dataMovie__video');
+                if (vm.movieSelected.video) {
+                    dataMovie__video.onload = function () {
+                        dataMovie__video.style.display = 'block';                  
+                        vm.isMovieSelected = true;
+                        
+                        $scope.$apply();
+                    }
+                }else{
+                    vm.isMovieSelected = true;
+                    dataMovie__video.style.display = 'none';                  
+                }
+
+            });
             MoviesProvider.getSimilarMovies(movieId, vm.filterParams).then(response => vm.similarMovies = response.movies);
             disableMainScroll();
         }
 
         function closeMovieDetails() {
             vm.isMovieSelected = false;
+            vm.isLoadMovieSelected = false;
             enableMainScroll();
         }
 
@@ -191,35 +212,38 @@
         function showSingIn() {
             let singInNav = document.querySelector('.singIn-nav');
             singInNav.style.display = 'flex';
+            singInNav.style.zIndex = -1;
             singInNav.classList.add('animated');
             singInNav.classList.add('slideInDown');
-            singInNav.addEventListener("animationend", function () {
+            singInNav.addEventListener('animationend', function finishShowSingIn() {
                 singInNav.style.zIndex = 1;
+                singInNav.classList.remove('slideInDown');
+                singInNav.removeEventListener('animationend', finishShowSingIn);
             }, false);
         }
 
         function singIn() {
             FBP.singInUser(vm.currentUser).then(response => {
+                if (!response) { showWrongPassword(); return; }
                 let uidUser = response.uid
                 if (response.uid) {
                     vm.isUserSingIn = true;
                     FBP.loadUser().then(response => {
                         vm.currentUser = response;
                         vm.currentUser.uid = uidUser;
+                        hideSingInNav();
                         $scope.$apply();
-
                     });
                 }
-                $scope.$apply();
-            });;
+            });
 
-            let singInNav = document.querySelector('.singIn-nav');
-            singInNav.style.zIndex = -1;
-            singInNav.classList.add('slideOutUp');
-            singInNav.addEventListener("animationend", function () {
-                singInNav.style.display = 'none';
-            }, false);
 
+        }
+
+        function singInWithEnter(e) {
+            if (e.keyCode == 13) { // escape key maps to keycode `27`
+                singIn();
+            }
         }
 
         function singOut() {
@@ -251,7 +275,9 @@
 
         //////////////////////////////// AUX FUNTIONS ////////////////////////////////
         function cleanSearch() {
-            vm.search = {};
+            vm.search = {
+                sort_by: 'popularity'
+            };
         }
 
         function moviesRecived(response) {
@@ -272,6 +298,7 @@
             let finalScrollPosition = ngScope.scrollHeight;
 
             if (vm.loadMovies) return;
+            if (vm.isViewOwnMovies) return;
 
             if (scrollPosition >= finalScrollPosition) {
                 vm.loadMovies = true;
@@ -311,15 +338,58 @@
             vm.isViewOwnMovies = false;
             cleanSearch();
         }
+
+        function hideSingInNav() {
+            let singInNav = document.querySelector('.singIn-nav');
+            singInNav.style.zIndex = -1;
+            singInNav.classList.add('slideOutUp');
+            singInNav.addEventListener("animationend", function finishHideSingInNav() {
+                singInNav.style.display = 'none';
+                singInNav.classList.remove('slideOutUp');
+                singInNav.removeEventListener('animationend', finishHideSingInNav);
+                hideWrongPassword();
+            }, false);
+        }
+
+        function showWrongPassword() {
+            let passwordInput = document.querySelector('#wrong--password');
+            passwordInput.style.backgroundColor = '#faa2a2';
+        }
+
+        function hideWrongPassword() {
+            let passwordInput = document.querySelector('#wrong--password');
+            passwordInput.style.backgroundColor = 'white';
+        }
+
+        function showMovieDetails() {
+            let movieDetails = document.querySelector('.movieDetails');
+            let backgroundAlfa = document.querySelector('.backgroundAlfa');
+            backgroundAlfa.classList.add('animated');
+            backgroundAlfa.classList.add('fadeIn');
+            movieDetails.classList.add('animated');
+            movieDetails.classList.add('fadeInRight');
+            movieDetails.addEventListener('animationend', function finishShowMovieDetails() {
+                backgroundAlfa.classList.remove('fadeIn');
+                movieDetails.classList.remove('fadeInRight');
+                movieDetails.removeEventListener('animationend', finishShowMovieDetails);
+            }, false);
+        }
         /////////////////////////////// EVENT LISTENER ///////////////////////////////
         window.addEventListener('scroll', function (e) {
             lazyLoadOfMovies();
         });
 
         window.addEventListener('keyup', function (e) {
-            if (e.keyCode == 27 && vm.isMovieSelected == true) { // escape key maps to keycode `27`
+            if (e.keyCode == 27 && (vm.isMovieSelected || vm.isLoadMovieSelected)) { // escape key maps to keycode `27`
                 closeMovieDetails();
                 $scope.$apply();
+                return;
+            }
+
+            if (e.keyCode == 27 && !vm.isMovieSelected) { // escape key maps to keycode `27`
+                let singInNav = document.querySelector('.singIn-nav');
+                if (!singInNav) return;
+                hideSingInNav();
             }
         });
 

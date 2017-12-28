@@ -194,6 +194,13 @@ body{
     bottom:0;
 }
 
+.movieDetails--loading{
+    display: flex;
+    flex-flow: row wrap;
+    padding-top: 200px; 
+    justify-content: center;
+}
+
 .movieDetails__header{
     height: 105px;
     border-bottom: 1px solid #e9ecee;

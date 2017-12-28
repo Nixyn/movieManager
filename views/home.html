@@ -1,5 +1,9 @@
-<div class="backgroundAlfa" ng-show="homeCtrl.isMovieSelected" ng-click="homeCtrl.closeMovieDetails()" ng-keyup="homeCtrl.isPressEsc()">
+<div class="backgroundAlfa" ng-show="homeCtrl.isMovieSelected || homeCtrl.isLoadMovieSelected" ng-click="homeCtrl.closeMovieDetails()" ng-keyup="homeCtrl.isPressEsc()">
 </div>
+
+<section class="movieDetails movieDetails--loading" ng-show="homeCtrl.isLoadMovieSelected">
+    <div class="load-spinner"></div>
+</section>
 
 <section class="movieDetails" ng-show="homeCtrl.isMovieSelected">
 
@@ -35,15 +39,9 @@
             <p class="dataMovie__paragraph">
                 {{homeCtrl.movieSelected.overview}}
             </p>
-            <button class="btn btn-green" ng-if="homeCtrl.isUserSingIn" ng-class="{'btn-red':homeCtrl.checkFavMovies(homeCtrl.movieSelected.id)}"
-                ng-click="homeCtrl.addFav(homeCtrl.movieSelected.id)">Favorita</button>
-            <button class="btn btn-green" ng-if="homeCtrl.isUserSingIn" ng-class="{'btn-red':homeCtrl.checkViewMovie(homeCtrl.movieSelected.id)}"
-                ng-click="homeCtrl.addViewMovies(homeCtrl.movieSelected.id)">Para más tarde</button>
-            <button class="btn btn-green" ng-if="homeCtrl.isUserSingIn" ng-class="{'btn-red':homeCtrl.checkMoviesToWatch(homeCtrl.movieSelected.id)}"
-                ng-click="homeCtrl.addMoviesToWatch(homeCtrl.movieSelected.id)">Vista</button>
             <div class="dataMovie__trailer-section">
                 <span class="dataMovie__sectionName">Tráiler</span>
-
+    
 
                 <iframe class="dataMovie__video" width="610" height="370" ng-src="{{homeCtrl.movieSelected.video}}" frameborder="0" gesture="media"
                     allow="encrypted-media" allowfullscreen></iframe>
@@ -90,9 +88,9 @@
         <!-- <button class="btn btn-large">Series</button> -->
     </div>
     <div>
-        <button class="btn btn-sing" ng-click="homeCtrl.showSingIn()" ng-if="!homeCtrl.isUserSingIn">Sing in</button>
-        <a href="#!/singup" class="btn btn-sing" ng-if="!homeCtrl.isUserSingIn">Sing up</a>
-        <button class="btn btn-sing" ng-if="homeCtrl.isUserSingIn" ng-click="homeCtrl.singOut()">Log out</button>
+        <button class="btn btn-sing" ng-click="homeCtrl.showSingIn()" ng-if="!homeCtrl.isUserSingIn">Entrar</button>
+        <a href="#!/singup" class="btn btn-sing" ng-if="!homeCtrl.isUserSingIn">Registrate</a>
+        <button class="btn btn-sing" ng-if="homeCtrl.isUserSingIn" ng-click="homeCtrl.singOut()">Salir</button>
         <!-- <button class="btn btn-sing"  ng-if="homeCtrl.isUserSingIn">Modify</button> -->
     </div>
 
@@ -100,9 +98,8 @@
 
 <div class="singIn-nav" ng-if="!homeCtrl.isUserSingIn">
     <input class="inputText" type="text" placeholder="Email" ng-model="homeCtrl.currentUser.email">
-    <input class="inputText" type="password" placeholder="Password" ng-model="homeCtrl.currentUser.password">
-    <button class="btn btn-sing" ng-click="homeCtrl.singIn()">Log in</button>
-
+    <input class="inputText" id="wrong--password" type="password" placeholder="Password" ng-model="homeCtrl.currentUser.password" ng-keyup="homeCtrl.singInWithEnter($event)">
+    <button class="btn btn-sing" ng-click="homeCtrl.singIn()">Acceder</button>
 </div>
 
 <div class="wrapper">
@@ -157,7 +154,7 @@
                 </p>
 
                 <select class="select" ng-model="homeCtrl.search.sort_by" ng-change="homeCtrl.getFilteredMovies()" ng-if="!homeCtrl.isViewOwnMovies">
-                    <option value="" selected>Ordenar</option>
+                    <option value="popularity" selected>Ordenar</option>
                     <option value="popularity">Popularity</option>
                     <option value="release_date">Release date</option>
                     <option value="primary_release_date">Primary release date</option>
@@ -168,7 +165,7 @@
             </div>
             <div class="filmShowcase__showcase">
                 <div class="filmShowcase__showcase--not-movie" ng-if="homeCtrl.totalResults===0">No hay resultados.</div>
-                <movie-card ng-repeat="movie in homeCtrl.movies track by movie.id" movie="movie" get-details="homeCtrl.getMovieDetails(movieId)"
+                <movie-card ng-repeat="movie in homeCtrl.movies track by $index" movie="movie" get-details="homeCtrl.getMovieDetails(movieId)"
                     movies="homeCtrl.movies" current-user="homeCtrl.currentUser"></movie-card>
 
                 <div class="load-box" ng-if="!homeCtrl.isViewOwnMovies">

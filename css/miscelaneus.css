@@ -80,8 +80,7 @@
 
 .btn-gender{
     width: 115px;
-    height: 33px;
-    line-height: 33px;
+    height: 40px;
     text-align: center;
     color: #8e9297;
     border: 2px solid #e9ecee;
@@ -95,8 +94,7 @@
 }
 .btn-gender-selected{
     width: 115px;
-    height: 33px;
-    line-height: 33px;
+    height: 40px;
     text-align: center;
     color: #2883d8;
     border: 2px solid #2883d8;

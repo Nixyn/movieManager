@@ -9,6 +9,7 @@
     function firebaseProvider() {
         /* __________________________: Functions Declaration :_________________________ */
         var service = {
+            checkCurrentUser:checkCurrentUser,
             registerNewUser: registerNewUser,
             registerNewUserByGoogle:registerNewUserByGoogle,
             registerNewUserByFacebook:registerNewUserByFacebook,
@@ -23,6 +24,10 @@
 
         //////////////////////////////// MAIN FUNTIONS ////////////////////////////////
 
+        function checkCurrentUser() {
+            return firebase.auth();
+        }
+        
         function registerNewUser(user) {
             return firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
                 .then(response => addDataUser(response, user))
