@@ -9,12 +9,12 @@
         $routeProvider
             .when("/",{
                 controller: 'HomeController',
-                templateUrl: '/views/home.html',
+                templateUrl: '/movieManager/views/home.html',
                 controllerAs: 'homeCtrl'
             })
             .when("/singup",{
                 controller: 'singUpController',
-                templateUrl: '/views/singUp.html',
+                templateUrl: '/movieManager/views/singUp.html',
                 controllerAs: 'singUpCtrl'
             });
     }
